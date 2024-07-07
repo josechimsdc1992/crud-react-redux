@@ -6,30 +6,16 @@ import {
     TableHead,
     TableHeaderCell,
     TableRow,
+    Card,
+    Title,
+    Badge
   } from '@tremor/react';
-  
-  const data = [
-    {
-        id: '1',
-        name: 'Yazman Rodriguez',
-        email: 'yazmanito@gmail.com',
-        github: 'yazmanito',
-    },
-    {
-        id: '2',
-        name: 'Leonardo',
-        email: 'leo@gmail.com',
-        github: 'leo',
-    },
-    {
-        id: '3',
-        name: 'Haakon Dahlberg',
-        email: 'haakon@gmail.com',
-        github: 'hhakon',
-    },
-  ];
+  import { useAppSelector } from '../hooks/store';
+
+
   
   export default function ListOfUsers() {
+    const users=useAppSelector((state)=>state.users)
     return (
       <>
         <div className="sm:flex sm:items-center sm:justify-between sm:space-x-10">
@@ -48,7 +34,12 @@ import {
             Add user
           </button>
         </div>
-        <Table className="mt-8">
+        <Card>
+          <Title>
+            Usuarios
+            <Badge style={{marginLeft:'5px'}}>{users.length}</Badge>
+          </Title>
+          <Table className="mt-8">
           <TableHead>
             <TableRow className="border-b border-tremor-border dark:border-dark-tremor-border">
               <TableHeaderCell className="text-tremor-content-strong dark:text-dark-tremor-content-strong">
@@ -66,7 +57,7 @@ import {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((item) => (
+            {users.map((item) => (
               <TableRow key={item.id}>
                 <TableCell className="font-medium text-tremor-content-strong dark:text-dark-tremor-content-strong">
                     {item.id}
@@ -93,6 +84,8 @@ import {
             ))}
           </TableBody>
         </Table>
+        </Card>
+        
       </>
     );
   }
